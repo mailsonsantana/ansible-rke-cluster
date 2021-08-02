@@ -1,0 +1,32 @@
+- name: Instalando kubectl
+  shell: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  args:
+    chdir: /usr/local/bin
+    creates: kubectl
+    warn: false
+
+- name: Permissão de Execução do Kubectl
+  ansible.builtin.file:
+    path: /usr/local/bin/kubectl
+    mode: '755'
+
+- name: Instalando o Rke
+  shell: curl -s https://api.github.com/repos/rancher/rke/releases/latest | grep browser_download_url | grep amd64 | grep linux | cut -d '"' -f 4 | wget -qi -
+  args:
+    chdir: /usr/local/bin/
+    creates: rke_linux-amd64
+    warn: false
+
+- name: Permissão de execução do Rke
+  ansible.builtin.file:
+    path: /usr/local/bin/rke_linux-amd64
+    mode: '755'
+
+- name: Movendo binario do Rke para o path
+  command: mv /usr/local/bin/rke_linux-amd64 /usr/local/bin/rke
+
+- name: Instalando o Helm
+  shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+  args:
+    warn: false
+  become: yes

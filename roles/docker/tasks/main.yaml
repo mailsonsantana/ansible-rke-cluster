@@ -1,0 +1,15 @@
+- name: Instalando o Docker
+  shell: curl -fsSL https://get.docker.com | bash -
+  become: yes
+
+- name: Iniciando o Docker
+  systemd:
+    name: docker.service
+    state: started
+    enabled: true
+
+- name: Adicionando o grupo docker ao usuario Rke
+  ansible.builtin.user:
+    name: rke
+    groups: docker
+    append: yes
