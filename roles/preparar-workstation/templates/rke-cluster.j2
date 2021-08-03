@@ -88,13 +88,13 @@ services:
 # Depois de iniciar o cluster, você não pode alterar seu provedor de rede.
 # Configurando o plug-in de rede
 network:
-    plugin: weave
-    options:
-      weave_autoscaler_priority_class_name: system-cluster-critical
-      weave_priority_class_name: system-cluster-critical
-    # A criptografia Weave pode ser habilitada passando uma senha de string para a configuração do provedor de rede.
-    #weave_network_provider:
-      #password: "Q]SZOQ5wp@n$oijz"
+  plugin: weave
+  options:
+    weave_autoscaler_priority_class_name: system-cluster-critical
+    weave_priority_class_name: system-cluster-critical
+  # A criptografia Weave pode ser habilitada passando uma senha de string para a configuração do provedor de rede.
+  #weave_network_provider:
+    #password: "Q]SZOQ5wp@n$oijz"
 
 # Especifique o provedor de DNS (coredns ou kube-dns)
 dns:
@@ -110,7 +110,7 @@ monitoring:
 authentication:
   strategy: x509
   sans:
-    - "xxxx"
+    - " {{ sans_url }}"
 
 # Definir mecanismo de autorização
 authorization:
