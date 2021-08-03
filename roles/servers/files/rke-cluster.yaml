@@ -1,0 +1,126 @@
+# https://rancher.com/docs/rke/latest/en/config-options/
+nodes:
+- address: 10.10.1.10
+  internal_address:
+  hostname_override: rke-master-01
+  role: [controlplane, etcd]
+  user: rke
+- address: 10.10.1.11
+  internal_address:
+  hostname_override: rke-master-02
+  role: [controlplane, etcd]
+  user: rke
+- address: 10.10.1.12
+  internal_address:
+  hostname_override: rke-master-03
+  role: [controlplane, etcd]
+  user: rke
+- address: 10.10.1.13
+  internal_address:
+  hostname_override: rke-worker-01
+  role: [worker]
+  user: rke
+- address: 10.10.1.114
+  internal_address:
+  hostname_override: rke-worker-02
+  role: [worker]
+  user: rke
+
+# Usando um agente ssh local
+# Usando a chave privada SSH com uma senha - eval `ssh-agent -s` && ssh-add
+ssh_agent_auth: true
+
+# Chave SSH que acessa todos os hosts em seu cluster
+ssh_key_path: ~/.ssh/id_rsa
+
+# Por padrão, o nome do seu cluster será local
+# Defina um nome de cluster diferente
+cluster_name: rke
+
+# Falha para versão do Docker não compatível com Kubernetes
+ignore_docker_version: false
+
+# Local de armazenamento dos recursos do cluster (etcd, kubernetes)
+prefix_path: /opt/rke
+
+# Defina a versão do kubernetes para instalar: https://rancher.com/docs/rke/latest/en/upgrades/#listing-supported-kubernetes-versions
+# Verificar com -> rke config --list-version --all
+kubernetes_version: v1.20.9-rancher1-1
+
+# Etcd snapshots
+services:
+  etcd:
+    backup_config:
+      interval_hours: 12
+      retention: 6
+
+  kube-api:
+     # Intervalo de IP para quaisquer serviços criados no Kubernetes
+     # Deve corresponder ao service_cluster_ip_range no kube-controller
+    service_cluster_ip_range: 10.43.0.0/16
+    # Exponha um intervalo de portas diferente para serviços NodePort
+    service_node_port_range: 30000-32767
+    pod_security_policy: false
+    always_pull_images: false
+    secrets_encryption_config:
+      enabled: true
+  
+  kube-controller:
+    # Pool CIDR usado para atribuir endereços IP a pods no cluster
+    cluster_cidr: 10.42.0.0/16
+     # Intervalo de IP para quaisquer serviços criados no Kubernetes
+     # Isso deve corresponder ao service_cluster_ip_range em kube-api
+    service_cluster_ip_range: 10.43.0.0/16
+    
+  kubelet:
+    # Domínio base para o cluster
+    cluster_domain: cluster.local
+    # Endereço IP para o endpoint de serviço DNS
+    cluster_dns_server: 10.43.0.10
+    # Falha se a swap estiver ativada
+    fail_swap_on: true
+    # Defina o máximo de pods em vez do padrão
+    extra_args:
+      max-pods: 300
+
+# Configurar plug-ins de rede
+# RKE fornece os seguintes plug-ins de rede que são implantados como complementos: flannel, calico, weave and canal
+# Depois de iniciar o cluster, você não pode alterar seu provedor de rede.
+# Configurando o plug-in de rede
+network:
+    plugin: weave
+    options:
+      weave_autoscaler_priority_class_name: system-cluster-critical
+      weave_priority_class_name: system-cluster-critical
+    # A criptografia Weave pode ser habilitada passando uma senha de string para a configuração do provedor de rede.
+    #weave_network_provider:
+      #password: "Q]SZOQ5wp@n$oijz"
+
+# Especifique o provedor de DNS (coredns ou kube-dns)
+dns:
+  provider: coredns
+
+# Ativa o metric-server, necessário para o autoscaling
+monitoring:
+  provider: metrics-server
+
+# Atualmente, apenas a estratégia de autenticação x509 é suportada.
+# Você pode opcionalmente criar SANs adicionais (nomes de host ou IPs) para adicionar ao certificado PKI do servidor API.
+# Isso é útil se você deseja usar um balanceador de carga para os servidores de control plane.
+authentication:
+  strategy: x509
+  sans:
+    - "xxxx"
+
+# Definir mecanismo de autorização
+authorization:
+    # Use `mode: none` para desativar a autorização
+    mode: rbac
+
+# Atualmente, apenas o ingress nginx é compatível.
+# Para desativar o controlador ingress, defina `provider: none`
+# `node_selector` controla o nó especifico de entrada e é opcional
+ingress:
+  provider: nginx
+  options:
+     use-forwarded-headers: "true"

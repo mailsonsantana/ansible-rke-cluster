@@ -52,9 +52,24 @@
       - {key: net.bridge.bridge-nf-call-iptables,  value: 1}
       - {key: net.ipv4.ip_forward,  value: 1}
 
-  - name: Liberando as portas necessárias no firewall
+  - name: Liberando as portas TCP necessárias no firewall
     ansible.posix.firewalld:
-      port: "{{ item }}"
+      port: "{{ item }}/tcp"
       permanent: yes
       state: enabled
-    with_items: "{{ portas }}"
+    with_items: "{{ portas_tcp }}"
+
+  - name: Liberando as portas UDP necessárias no firewall
+    ansible.posix.firewalld:
+      port: "{{ item }}/udp"
+      permanent: yes
+      state: enabled
+    with_items: "{{ portas_udp }}"
+
+  - name: Permitir encaminhamento de TCP SSH
+    replace:
+      path: /etc/ssh/sshd_config
+      regexp: '#AllowTcpForwarding'
+      replace: 'AllowTcpForwarding'
+    notify:
+      - Restart SSHD
