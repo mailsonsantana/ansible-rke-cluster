@@ -1,4 +1,4 @@
-cluster_name:
+cluster_name: 
 k8s-version:
 master1: 
 master2:
