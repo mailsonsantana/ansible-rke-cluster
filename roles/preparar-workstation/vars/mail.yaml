@@ -1,0 +1,7 @@
+cluster_name:
+k8s-version:
+master1: 
+master2:
+master3:
+worker1:
+worker2:

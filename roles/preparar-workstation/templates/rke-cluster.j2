@@ -1,26 +1,26 @@
 # https://rancher.com/docs/rke/latest/en/config-options/
 nodes:
-- address: 10.10.1.10
+- address: {{ master1 }}
   internal_address:
   hostname_override: rke-master-01
   role: [controlplane, etcd]
   user: rke
-- address: 10.10.1.11
+- address: {{ master2 }}
   internal_address:
   hostname_override: rke-master-02
   role: [controlplane, etcd]
   user: rke
-- address: 10.10.1.12
+- address: {{ master3 }}
   internal_address:
   hostname_override: rke-master-03
   role: [controlplane, etcd]
   user: rke
-- address: 10.10.1.13
+- address: {{ worker1 }}
   internal_address:
   hostname_override: rke-worker-01
   role: [worker]
   user: rke
-- address: 10.10.1.114
+- address: {{ worker2 }}
   internal_address:
   hostname_override: rke-worker-02
   role: [worker]
@@ -35,7 +35,7 @@ ssh_key_path: ~/.ssh/id_rsa
 
 # Por padrão, o nome do seu cluster será local
 # Defina um nome de cluster diferente
-cluster_name: rke
+cluster_name: {{ cluster_name }}
 
 # Falha para versão do Docker não compatível com Kubernetes
 ignore_docker_version: false
@@ -45,7 +45,7 @@ prefix_path: /opt/rke
 
 # Defina a versão do kubernetes para instalar: https://rancher.com/docs/rke/latest/en/upgrades/#listing-supported-kubernetes-versions
 # Verificar com -> rke config --list-version --all
-kubernetes_version: v1.20.9-rancher1-1
+kubernetes_version: {{ k8s-version }}
 
 # Etcd snapshots
 services:
