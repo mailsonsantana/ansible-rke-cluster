@@ -1,8 +1,10 @@
 ---
 - hosts: workstation
   roles:
-    - workstation
+    - preparar-workstation
 
 - hosts: rke-servers
   roles:
-    - servers
+    - preparar-nodes
+    - instalar-docker
+    - criar-cluster
