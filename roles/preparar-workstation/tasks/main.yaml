@@ -30,3 +30,11 @@
   args:
     warn: false
   become: yes
+
+- name: Criando arquivo de configuração do Cluster RKE
+  template:
+    src: 'templates/rke-cluster.j2'
+    dest: '/home/rke/cluster.yaml'
+    owner: root
+    group: root
+    mode: 0644
