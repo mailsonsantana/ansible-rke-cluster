@@ -1,2 +1,4 @@
 - name: Instalando o Cluster
   shell: rke up --config ./rancher_cluster.yml
+  become: yes
+  become_user: rke

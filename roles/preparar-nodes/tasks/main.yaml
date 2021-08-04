@@ -6,6 +6,7 @@
   - name: Adicionando usuario Rke admin
     user:
       name: rke
+      home: /home/rke
       shell: /bin/bash
    
   - name: Creando arquivo sudo

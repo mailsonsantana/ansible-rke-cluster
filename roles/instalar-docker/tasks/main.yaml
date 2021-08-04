@@ -1,15 +1,28 @@
-- name: Instalando o Docker
-  shell: curl -fsSL https://get.docker.com | bash -
+- name: Adicionando Repositorio Docker
+  shell: yum-config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+  args:
+    creates: /etc/yum.repos.d/centos_o.repo 
+
+- name: Instalando Containerd
+  yum:
+    name: containerd
+    state: present
+
+- name: Create o diretorio do containerd
+  ansible.builtin.file:
+    path: /etc/containerd
+    state: directoryy
+    mode: '0755'
+
+- name: Criando configuração do containerd
+  shell: containerd config default | tee /etc/containerd/config.toml
+  args:
+    warn: false
   become: yes
 
-- name: Iniciando o Docker
+- name: Reiniciando o containerd
   systemd:
-    name: docker.service
-    state: started
-    enabled: true
-
-- name: Adicionando o grupo docker ao usuario Rke
-  ansible.builtin.user:
-    name: rke
-    groups: docker
-    append: yes
+    name: containerd
+    state: restarted
+    enabled: yes
+  become: yes
