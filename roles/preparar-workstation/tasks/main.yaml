@@ -39,7 +39,6 @@
   shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
   args:
     warn: false
-  become: yes
 
 - name: Criando arquivo de configuração do Cluster RKE
   template:
