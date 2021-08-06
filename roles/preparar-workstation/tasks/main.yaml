@@ -38,6 +38,8 @@
 - name: Instalando o Helm
   shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
   args:
+    chdir: /usr/local/bin
+    creates: helm
     warn: false
 
 - name: Criando arquivo de configuração do Cluster RKE
