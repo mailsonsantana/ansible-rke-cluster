@@ -31,14 +31,14 @@
       - {key: net.ipv4.ip_forward,  value: 1}
 
   - name: Liberando as portas TCP necessárias no firewall
-    ansible.posix.firewalld:
+    firewalld:
       port: "{{ item }}/tcp"
       permanent: yes
       state: enabled
     with_items: "{{ portas_tcp }}"
 
   - name: Liberando as portas UDP necessárias no firewall
-    ansible.posix.firewalld:
+    firewalld:
       port: "{{ item }}/udp"
       permanent: yes
       state: enabled
