@@ -46,6 +46,6 @@
   template:
     src: 'templates/rke-cluster.j2'
     dest: '/home/rke/cluster.yaml'
-    owner: root
-    group: root
+    owner: rke
+    group: rke
     mode: 0644
