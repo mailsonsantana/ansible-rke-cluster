@@ -11,7 +11,7 @@
 - name: Create o diretorio do containerd
   ansible.builtin.file:
     path: /etc/containerd
-    state: directoryy
+    state: directory
     mode: '0755'
 
 - name: Criando configuração do containerd
