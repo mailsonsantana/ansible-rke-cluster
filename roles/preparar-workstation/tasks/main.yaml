@@ -45,7 +45,5 @@
 - name: Criando arquivo de configuração do Cluster RKE
   template:
     src: 'templates/rke-cluster.j2'
-    dest: '/home/rke/cluster.yaml'
-    owner: rke
-    group: rke
+    dest: '~/cluster.yaml'
     mode: 0644
