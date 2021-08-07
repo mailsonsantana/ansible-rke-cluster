@@ -36,6 +36,8 @@
       permanent: yes
       state: enabled
     with_items: "{{ portas_tcp }}"
+    notify:
+      - restart firewalld
 
   - name: Liberando as portas UDP necessárias no firewall
     firewalld:
@@ -44,7 +46,7 @@
       state: enabled
     with_items: "{{ portas_udp }}"
     notify:
-      - Restart Firewalld
+      - restart firewalld
 
   - name: Permitir encaminhamento de TCP SSH
     replace:
@@ -52,4 +54,4 @@
       regexp: '#AllowTcpForwarding'
       replace: 'AllowTcpForwarding'
     notify:
-      - Restart SSHD
+      - restart sshd

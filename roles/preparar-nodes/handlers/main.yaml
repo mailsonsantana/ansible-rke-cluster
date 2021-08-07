@@ -1,9 +1,10 @@
-  - name: Restart SSHD
-    ansible.builtin.service:
+  - name: restart sshd
+    systemd:
       name: sshd
       state: restarted
 
-  - name: Restart Firewalld
-    ansible.builtin.service:
+
+  - name: restart firewalld
+    systemd:
       name: firewalld
       state: restarted
