@@ -43,6 +43,8 @@
       permanent: yes
       state: enabled
     with_items: "{{ portas_udp }}"
+    notify:
+      - Restart Firewalld
 
   - name: Permitir encaminhamento de TCP SSH
     replace:
