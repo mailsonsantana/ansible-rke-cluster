@@ -1,0 +1,3 @@
+dependencies:
+  - preparar-nodes
+  - instalar-containerd

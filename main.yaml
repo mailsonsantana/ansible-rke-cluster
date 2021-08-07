@@ -6,9 +6,9 @@
 - hosts: workstation
   roles:
     - { role: 'preparar-workstation', tags: 'preparar-workstation' }
+    - { role: 'criar-cluster', tags: 'criar-cluster'}
 
 - hosts: rke-servers
   roles:
     - { role: 'preparar-nodes', tags: 'preparar-nodes'}
     - { role: 'instalar-containerd', tags: 'instalar-containerd'}
-    - { role: 'criar-cluster', tags: 'criar-cluster'}
