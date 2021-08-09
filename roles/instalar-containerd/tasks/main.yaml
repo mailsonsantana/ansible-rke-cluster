@@ -3,18 +3,18 @@
   args:
     creates: /etc/yum.repos.d/centos_o.repo 
 
-- name: Instalando Containerd
+- name: Instalando somente o containerd
   yum:
     name: containerd
     state: present
 
-- name: Create o diretorio do containerd
+- name: Criando o diretorio de configuração do containerd
   ansible.builtin.file:
     path: /etc/containerd
     state: directory
     mode: '0755'
 
-- name: Criando configuração do containerd
+- name: Criando arquivo de configuração do containerd
   shell: containerd config default | tee /etc/containerd/config.toml
   args:
     warn: false

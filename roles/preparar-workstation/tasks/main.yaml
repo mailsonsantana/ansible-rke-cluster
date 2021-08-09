@@ -8,14 +8,14 @@
     - nfs-utils
     - vim
 
-- name: Instalando kubectl
+- name: Instalando o kubectl
   shell: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
   args:
     chdir: /usr/local/bin
     creates: kubectl
     warn: false
 
-- name: Permissão de Execução do Kubectl
+- name: Concedendo permissão de execução ao Kubectl
   ansible.builtin.file:
     path: /usr/local/bin/kubectl
     mode: '755'
@@ -27,12 +27,12 @@
     creates: rke_linux-amd64
     warn: false
 
-- name: Permissão de execução do Rke
+- name: Concedendo permissão de execução ao RKE
   ansible.builtin.file:
     path: /usr/local/bin/rke_linux-amd64
     mode: '755'
 
-- name: Movendo binario do Rke para o path
+- name: Movendo binario do Rke para o path local
   command: mv /usr/local/bin/rke_linux-amd64 /usr/local/bin/rke
 
 - name: Instalando o Helm
@@ -42,7 +42,7 @@
     creates: helm
     warn: false
 
-- name: Criando arquivo de configuração do Cluster RKE
+- name: Criando arquivo de configuração do cluster RKE
   template:
     src: 'templates/rke-cluster.j2'
     dest: '~/cluster.yaml'

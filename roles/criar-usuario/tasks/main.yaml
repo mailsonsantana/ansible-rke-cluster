@@ -5,7 +5,7 @@
     shell: /bin/bash
     generate_ssh_key: yes
 
-- name: Creando arquivo sudo
+- name: Criando arquivo sudo
   file:
     path: /etc/sudoers.d/rke
     state: touch
