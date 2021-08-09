@@ -1,5 +1,6 @@
 cluster_name: 
 k8s-version:
+user:
 sans_url:
 master1: 
 master2:
