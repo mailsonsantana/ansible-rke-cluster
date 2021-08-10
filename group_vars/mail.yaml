@@ -1,3 +1,4 @@
+#Variaveis globais
 cluster_name: 
 k8s-version:
 user:
