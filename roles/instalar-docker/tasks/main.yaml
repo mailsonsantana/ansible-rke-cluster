@@ -1,0 +1,26 @@
+- name: Adicionando Repositorio Docker
+  shell: yum-config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+  args:
+    creates: /etc/yum.repos.d/centos_o.repo 
+
+- name: Checando instalação do docker
+  shell: docker version
+  register: docker
+
+- name: Instalando o docker
+  shell: curl -fsSL https://get.docker.com | bash
+  args:
+    warn: false
+  when: docker == false
+
+- name: Adicionando permissão ao usuário "{{ user }}" ao grupo docker
+  user:
+    name: "{{ user }}"
+    groups: docker
+    append: yes
+
+- name: Iniciando o docker
+  systemd:
+    name: docker
+    state: started
+    enabled: yes

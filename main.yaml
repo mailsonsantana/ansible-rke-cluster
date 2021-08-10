@@ -11,4 +11,5 @@
 - hosts: rke-servers
   roles:
     - { role: 'preparar-nodes', tags: 'preparar-nodes'}
+    - { role: 'instalar-docker', tags: 'instalar-docker'}
     - { role: 'instalar-containerd', tags: 'instalar-containerd'}
