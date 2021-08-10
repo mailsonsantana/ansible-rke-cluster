@@ -45,7 +45,7 @@ prefix_path: /opt/rke
 
 # Defina a versão do kubernetes para instalar: https://rancher.com/docs/rke/latest/en/upgrades/#listing-supported-kubernetes-versions
 # Verificar com -> rke config --list-version --all
-kubernetes_version: {{ k8s-version }}
+kubernetes_version: {{ k8s_version }}
 
 # Etcd snapshots
 services:
@@ -110,7 +110,7 @@ monitoring:
 authentication:
   strategy: x509
   sans:
-    - " {{ sans_url }}"
+    - {{ sans_url }}
 
 # Definir mecanismo de autorização
 authorization:
