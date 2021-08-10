@@ -1,27 +1,27 @@
 - name: Adicionando usuario Rke admin
   user:
-    name: rke
-    home: /home/rke
+    name: "{{ user }}"
+    home: /home/{{ user }}
     shell: /bin/bash
     generate_ssh_key: yes
 
 - name: Criando arquivo sudo
   file:
-    path: /etc/sudoers.d/rke
+    path: /etc/sudoers.d/{{ user }}
     state: touch
 
 - name: Conceder permissão sudo ao usuario Rke
   lineinfile:
-    path: /etc/sudoers.d/rke
+    path: /etc/sudoers.d/{{ user }}
     state: present
-    line: 'rke ALL=(ALL:ALL) NOPASSWD: ALL'
+    line: '{{ user }} ALL=(ALL:ALL) NOPASSWD: ALL'
 
 - name: Definindo chave de autorização ssh
   authorized_key:
-    user: rke
+    user: "{{ user }}"
     state: present
-    key: "{{ lookup('file', '/home/rke/.ssh/id_rsa.pub') }}"
+    key: "{{ lookup('file', '/home/{{ user }}/.ssh/id_rsa.pub') }}"
 
 - name: Adicionando chave ssh do usuário Rke ao Known_hosts
-  shell: ssh-keyscan -H "{{ item }}" >> /home/rke/.ssh/known_hosts
+  shell: ssh-keyscan -H "{{ item }}" >> /home/{{ user }}/.ssh/known_hosts
   with_items: "{{ ansible_play_hosts }}"
