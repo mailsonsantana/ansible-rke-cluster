@@ -36,10 +36,8 @@
   command: mv /usr/local/bin/rke_linux-amd64 /usr/local/bin/rke
 
 - name: Instalando o Helm
-  shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+  shell: curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | sh
   args:
-    chdir: /usr/local/bin
-    creates: helm
     warn: false
 
 - name: Criando arquivo de configuração do cluster RKE
