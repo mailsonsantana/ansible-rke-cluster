@@ -1,2 +1,5 @@
 - name: Instalando o Cluster
   shell: rke up --config ~{{ user }}/cluster.yml
+
+- name: Exportando arquivo de configuração de acesso ao cluster
+  shell: export KUBECONFIG=~{{ user }}/kube_config_cluster.yml
