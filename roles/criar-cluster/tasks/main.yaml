@@ -1,5 +1,16 @@
+- import_role: name=preparar-nodes
+  become: yes
+
+- import_role: name=instalar-docker
+  become: yes
+
+- import_role: name=preparar-workstation
+  delegate_to: "{{ workstation }}"
+  become: yes
+
 - name: Instalando o Cluster
-  shell: rke up --config ~{{ user }}/cluster.yml
+  shell: /usr/local/bin/rke up --config ~{{ user }}/cluster.yml
+  delegate_to: "{{ workstation }}"
 
 - name: Exportando arquivo de configuração de acesso ao cluster
   shell: export KUBECONFIG=~{{ user }}/kube_config_cluster.yml
