@@ -3,13 +3,6 @@
   roles:
     - { role: 'criar-usuario', tags: 'criar-usuario' }
 
-- hosts: workstation
+- hosts: rkeservers
   roles:
-    - { role: 'preparar-workstation', tags: 'preparar-workstation' }
     - { role: 'criar-cluster', tags: 'criar-cluster'}
-
-- hosts: rke-servers
-  roles:
-    - { role: 'preparar-nodes', tags: 'preparar-nodes'}
-    - { role: 'instalar-docker', tags: 'instalar-docker'}
-    - { role: 'instalar-containerd', tags: 'instalar-containerd'}
