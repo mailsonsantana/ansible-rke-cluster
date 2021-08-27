@@ -1,8 +1,19 @@
 ---
 - hosts: all
   roles:
-    - { role: 'criar-usuario', tags: 'criar-usuario' }
+    - { role: 'criar-usuario', tags: 'usuario' }
 
 - hosts: rkeservers
   roles:
-    - { role: 'criar-cluster', tags: 'criar-cluster'}
+    - { role: 'preparar-nodes', tags: 'nodes'}
+    - { role: 'instalar-docker', tags: 'docker'}
+  become: yes
+
+- hosts: workstation
+  roles:
+    - { role: 'preparar-workstation', tags: 'workstation' }
+  become: yes
+
+- hosts: rkeservers
+  roles:
+    - { role: 'criar-cluster', tags: 'cluster'}
