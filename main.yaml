@@ -14,6 +14,6 @@
     - { role: 'preparar-workstation', tags: 'workstation' }
   become: yes
 
-- hosts: rkeservers
+- hosts: workstation
   roles:
     - { role: 'criar-cluster', tags: 'cluster'}
