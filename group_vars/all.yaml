@@ -1,5 +1,4 @@
 #Variaveis globais
-workstation:
 cluster_name: 
 k8s-version:
 user:
