@@ -3,6 +3,15 @@
       name: '*'
       state: latest
 
+  - name: Instalando pacotes adicionais
+    yum:
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - iscsi-initiator-utils
+      - libiscsi-utils
+      - nfs-utils
+
   - name: Carregando modulos do kernel para o Rke
     modprobe:
       name: "{{ item }}"
