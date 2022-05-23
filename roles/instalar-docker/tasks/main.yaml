@@ -1,17 +1,29 @@
 - name: Adicionando Repositorio Docker
   shell: yum-config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
   args:
-    creates: /etc/yum.repos.d/centos_o.repo 
+    creates: /etc/yum.repos.d/docker-ce.repo 
 
-- name: Checando instalação do docker
-  shell: docker version
-  register: docker
+- name: "Verificando se docker esta instalado"
+  package_facts:
+    manager: "auto"
 
-- name: Instalando o docker
-  shell: curl -fsSL https://get.docker.com | bash
-  args:
-    warn: false
-  when: docker == false
+- name: "Validação"
+  debug: 
+    msg: "Docker já esta instalado"
+  when: "'docker-ce' in ansible_facts.packages"
+
+- name: "Validação"
+  debug: 
+    msg: "Docker não esta instalado"
+  when: "'docker-ce' not in ansible_facts.packages"
+
+- name: Install Docker
+  package:
+    name: docker-ce
+    state: present
+    update_cache: yes
+  become: yes
+  when: "'docker-ce' not in ansible_facts.packages"
 
 - name: Adicionando permissão ao usuário "{{ user }}" ao grupo docker
   user:

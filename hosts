@@ -1,3 +1,4 @@
 [workstation]
-
-[rke-servers]
+localhost
+[rkeservers]
+192.168.0.113

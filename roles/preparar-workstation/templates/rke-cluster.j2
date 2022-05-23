@@ -3,28 +3,28 @@ nodes:
 - address: {{ master1 }}
   internal_address:
   hostname_override: rke-master-01
-  role: [controlplane, etcd]
+  role: [controlplane, etcd, worker]
   user: {{ user }}
-- address: {{ master2 }}
-  internal_address:
-  hostname_override: rke-master-02
-  role: [controlplane, etcd]
-  user: {{ user }}
-- address: {{ master3 }}
-  internal_address:
-  hostname_override: rke-master-03
-  role: [controlplane, etcd]
-  user: {{ user }}
-- address: {{ worker1 }}
-  internal_address:
-  hostname_override: rke-worker-01
-  role: [worker]
-  user: {{ user }}
-- address: {{ worker2 }}
-  internal_address:
-  hostname_override: rke-worker-02
-  role: [worker]
-  user: {{ user }}
+#- address: {{ master2 }}
+#  internal_address:
+#  hostname_override: rke-master-02
+#  role: [controlplane, etcd]
+#  user: {{ user }}
+#- address: {{ master3 }}
+#  internal_address:
+#  hostname_override: rke-master-03
+#  role: [controlplane, etcd]
+#  user: {{ user }}
+#- address: {{ worker1 }}
+#  internal_address:
+#  hostname_override: rke-worker-01
+#  role: [worker]
+#  user: {{ user }}
+#- address: {{ worker2 }}
+#  internal_address:
+#  hostname_override: rke-worker-02
+#  role: [worker]
+#  user: {{ user }}
 
 # Usando um agente ssh local
 # Usando a chave privada SSH com uma senha - eval `ssh-agent -s` && ssh-add

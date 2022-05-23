@@ -11,6 +11,7 @@
       - iscsi-initiator-utils
       - libiscsi-utils
       - nfs-utils
+      - yum-utils
 
   - name: Carregando modulos do kernel para o Rke
     modprobe:
