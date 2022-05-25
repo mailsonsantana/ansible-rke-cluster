@@ -1,7 +1,21 @@
-- name: Adicionando Repositorio Docker
+- name: Adicionando Repositorio Containerd
   shell: yum-config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
   args:
-    creates: /etc/yum.repos.d/centos_o.repo 
+    creates: /etc/yum.repos.d/docker-ce.repo
+
+- name: "Verificando se o containerd esta instalado"
+  package_facts:
+    manager: "auto"
+
+- name: "Validação"
+  debug:
+    msg: "Containerd já esta instalado"
+  when: "'containerd' in ansible_facts.packages"
+
+- name: "Validação"
+  debug:
+    msg: "Containerd não esta instalado"
+  when: "'containerd' not in ansible_facts.packages"
 
 - name: Instalando somente o containerd
   yum:
